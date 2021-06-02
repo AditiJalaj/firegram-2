@@ -4,3 +4,10 @@
   margin-top: 20px;
   background-color: rgb(18, 18, 77);
 }
+
+input{
+  background-color: blue;
+  color: azure;
+  border-radius: 50%;
+  display: block;
+}

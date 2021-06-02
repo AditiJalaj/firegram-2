@@ -1,12 +1,11 @@
 import {useState,useEffect} from 'react'
-import useStorage from '../custom-hooks/useStorage'
-import {storage} from '../config'
+import {storage,db,timestamp} from '../config'
 
 const UploadForm = () => {
     const [file,setFile]=useState('')
     const [progress,setProgress]=useState('')
     const [err,setErr]=useState('')
-    const [url,setUrl]=useState(null)
+    const [url,setUrl]=useState('')
 
     const types=["image/png" ,"image/jpeg"];
 
@@ -22,9 +21,15 @@ const UploadForm = () => {
         }
      }
 
+
+     //storage used to upload images and get download url before using db to create collection of these urls to be shown
     useEffect(()=>{
+           
             const storageRef=storage.ref(`images/${file.name}`)
-            storageRef.put(file).on('state_changed',(snapshot)=>{
+            const dbRef=db.collection('images')
+
+            
+                if(file!==undefined){storageRef.put(file).on('state_changed',(snapshot)=>{
                 let percent=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
                 setProgress(percent)
                 console.log(`percent is ${percent}`)
@@ -37,8 +42,11 @@ const UploadForm = () => {
                 .then((u)=>{
                     console.log('url is ',u)
                     setUrl(u)
+                    dbRef.add({url:u,createdAt:timestamp()})
+                    setUrl('')
                 })
-            })
+            
+            })}
      },[file])
 
 
@@ -53,7 +61,9 @@ const UploadForm = () => {
    
     console.log(file)
     return (<>
+        
         <input type='file' onChange={changeHandler}/>
+        <span>+</span>
         {file &&<div> {file.name}</div>}
         {err && <div> {err} </div>}
         {file && <div style={{width:progress+"%"}} className='progress-bar'> </div>}
