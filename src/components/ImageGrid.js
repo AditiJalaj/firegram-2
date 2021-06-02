@@ -21,7 +21,7 @@ const ImageGrid = () => {
         return ()=>unsub()
     },['images'])
 
-    //doubt what happens if we put docs as a dependency -infinite loop
+    // if we put docs as a dependency -infinite loop
 
     console.log('outside: docs.url is ',docs)
     
@@ -37,14 +37,6 @@ const ImageGrid = () => {
 
     */
    
-//    const deleteHandler=()=>{
-//        let dbRef=db.collection('images')
-//        dbRef.doc(y).delete().then(()=>{
-//            console.log('Deleted')
-//        }).catch((err)=>{
-//            console.log('error',err)
-//        })
-//    }
 
     return ( <>
         ImageGrid
@@ -53,8 +45,12 @@ const ImageGrid = () => {
             return(<>
                 <div style={{position:"relative"}}>
                 <img style={{margin:"2px",width:"100px",height:"102px"}} key={img.id} src={img.data.url} alt="not displaying"></img>
-        
-                <button  style={{color:"red" ,position:"absolute"}}>X</button>
+                <button onClick={()=>{
+                    db.collection('images').doc(img.id).delete().then(()=>{
+                        console.log('deleted')
+                    })
+                    }}
+                     style={{color:"red" ,position:"absolute"}}>X</button>
                 </div>
             </>
             ) 
