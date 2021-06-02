@@ -28,26 +28,30 @@ const UploadForm = () => {
             const storageRef=storage.ref(`images/${file.name}`)
             const dbRef=db.collection('images')
 
-            
-                if(file!==undefined)
+
+            if(file){
                 {storageRef.put(file).on('state_changed',(snapshot)=>{
-                let percent=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
-                setProgress(percent)
-                console.log(`percent is ${percent}`)
-            },(error)=>{
-                console.log(err)
-                setErr(error)
-            },
-            ()=>{
-                storageRef.getDownloadURL()
-                .then((u)=>{
-                    console.log('url is ',u)
-                    setUrl(u)
-                    dbRef.add({url:u,createdAt:timestamp()})
-                    setUrl('')
-                })
+                    let percent=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
+                    setProgress(percent)
+                    console.log(`percent is ${percent}`)
+                    // setFile('')
+                },(error)=>{
+                    console.log(err)
+                    setErr(error)
+                },
+                ()=>{
+                    storageRef.getDownloadURL()
+                    .then((u)=>{
+                        console.log('url is ',u)
+                        setUrl(u)
+                        dbRef.add({url:u,createdAt:timestamp()})
+
+                    })
+                
+                })}
+            }
             
-            })}
+                
      },[file])
 
 
@@ -68,7 +72,7 @@ const UploadForm = () => {
         {file &&<div> {file.name}</div>}
         {err && <div> {err} </div>}
         {file && <div style={{width:progress+"%"}} className='progress-bar'> </div>}
-        {url && <div> url is {url} </div>}
+        
         </> );
 }
  
