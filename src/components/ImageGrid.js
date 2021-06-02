@@ -39,7 +39,9 @@ const ImageGrid = () => {
         ImageGrid
         <div>
         {inf && inf.map((img)=>{
-            return <img style={{width:"100px",height:"102px"}} src={img} alt="not displaying"></img>
+            return(<img style={{width:"100px",height:"102px"}} src={img} alt="not displaying"></img>
+            ) 
+
         })}
         </div>
         </> );

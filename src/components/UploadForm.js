@@ -29,7 +29,8 @@ const UploadForm = () => {
             const dbRef=db.collection('images')
 
             
-                if(file!==undefined){storageRef.put(file).on('state_changed',(snapshot)=>{
+                if(file!==undefined)
+                {storageRef.put(file).on('state_changed',(snapshot)=>{
                 let percent=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
                 setProgress(percent)
                 console.log(`percent is ${percent}`)
