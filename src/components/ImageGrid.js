@@ -5,9 +5,9 @@ const ImageGrid = () => {
 
     const [docs,setDocs]=useState('')
 
-    
+
     useEffect(()=>{
-         
+
         db.collection('images')
         .orderBy('createdAt','desc')
         .onSnapshot((snap)=>{
@@ -17,7 +17,6 @@ const ImageGrid = () => {
           })
           setDocs(documents)
         })
-        
 
     },['images'])
 
@@ -27,17 +26,22 @@ const ImageGrid = () => {
     
     let inf=[]
 
-    if(docs!=undefined){
-     console.log('not unde')
-    docs.map((i)=>{
+    //docs.length > 0 will fix docs.map is not a fucntion on mount
+    if(docs!=undefined && docs.length>0){
+      docs.map((i)=>{
         console.log('i is ',i.data.url)
+        inf.push(i.data.url)
     })}
    
    
-    
 
     return ( <>
         ImageGrid
+        <div>
+        {inf && inf.map((img)=>{
+            return <img style={{width:"100px",height:"102px"}} src={img} alt="not displaying"></img>
+        })}
+        </div>
         </> );
 }
  
