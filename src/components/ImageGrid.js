@@ -61,7 +61,8 @@ var liked;
 
                 <button onClick={()=>{
                     db.collection('images').doc(img.id).delete().then(()=>{
-                        console.log('deleted')
+                        setModal(false)
+                        alert('pic being deleted')
                     })
                     }}
                      style={{color:"red" ,position:"absolute"}}>X</button>
