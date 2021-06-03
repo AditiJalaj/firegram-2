@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {db } from '../config'
 
-const ImageGrid = () => {
+const ImageGrid = ({setSelectedImg}) => {
 
     const [docs,setDocs]=useState('')
 
@@ -25,17 +25,6 @@ const ImageGrid = () => {
 
     console.log('outside: docs.url is ',docs)
     
-   /* REDUNDANT
-    // let inf=[]
-
-    // //docs.length > 0 will fix docs.map is not a fucntion on mount
-    // if(docs!=undefined && docs.length>0){
-    //   docs.map((i)=>{
-    //     console.log('i is ',i.data.url)
-    //     inf.push(i.data.url)
-    // })}
-
-    */
 
 
 var liked;
@@ -44,8 +33,17 @@ var liked;
         <div>
         {docs && docs.map((img)=>{
             return(<>
-                <div style={{position:"relative"}}>
-                <img style={{margin:"2px",width:"120px",height:"132px"}} key={img.id} src={img.data.url} alt="not displaying"></img>
+                <div style={{position:"relative"}}
+                onClick={()=>{
+                    setSelectedImg(img.data.url)
+                }}
+                >
+                <img style={{margin:"2px",width:"120px",height:"132px"}} 
+                key={img.id} 
+                
+
+                src={img.data.url} alt="not displaying" />
+                
                 <button onClick={(e)=>{
                     if(liked===true){
                         e.target.style.backgroundColor='red'
