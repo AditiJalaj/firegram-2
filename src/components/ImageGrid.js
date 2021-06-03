@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {db } from '../config'
 
-const ImageGrid = ({setSelectedImg}) => {
+const ImageGrid = ({setSelectedImg,setModal}) => {
 
     const [docs,setDocs]=useState('')
 
@@ -35,6 +35,7 @@ var liked;
             return(<>
                 <div style={{position:"relative"}}
                 onClick={()=>{
+                    setModal(true)
                     setSelectedImg(img.data.url)
                 }}
                 >

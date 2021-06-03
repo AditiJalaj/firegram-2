@@ -8,14 +8,15 @@ import {useState} from 'react'
 
 function App() {
 
-const [selectedImg,setSelectedImg]=useState(false)
+const [selectedImg,setSelectedImg]=useState(null)
+const [modal,setModal]=useState(false)
 
  return (
    <>
    <Title/>
    <UploadForm/>
-   <ImageGrid setSelectedImg={setSelectedImg} />
-   <Modal selectedImg={selectedImg} />
+   <ImageGrid setSelectedImg={setSelectedImg} setModal={setModal}/>
+   {modal===true && <Modal selectedImg={selectedImg} setModal={setModal} /> }
    </>
   );
 }
